@@ -1,4 +1,3 @@
-
 class LinkedListNode
 	attr_accessor :value, :next_node
 
@@ -7,20 +6,8 @@ class LinkedListNode
 		@next_node = next_node
 	end
 
-#	def print_values
-#		print "#{self.value} --> "
-#		if self.next_node.nil?
-#			print "nil\n"
-#		else
-#			self.next_node.print_values
-#		end
-#	end
 end
 
-#node1 = LinkedListNode.new(37)
-#node2 = LinkedListNode.new(99, node1)
-#node3 = LinkedListNode.new(12, node2)
-#node3.print_values
 
 class Stack
 	attr_reader :data
@@ -65,20 +52,46 @@ end
 
 
 
-
-my_stack = Stack.new
-node1 = my_stack.push(37)
-node2 = my_stack.push(99)
-node3 = my_stack.push(12)
-
-
-print_values(node3)
-
-puts "---------"
-
-revlist = reverse_list(node3)
-
-print_values(revlist)
+def reverse_list2(list, previous=nil)
+	if list.next_node.nil?
+		list.next_node = previous
+		print_values(list)
+		return
+	else
+		@temp = list.next_node
+		list.next_node = previous
+		reverse_list2(@temp, list)
+	end
+end
 
 
+def floydscycle(node, x=node, y=node, counter=1)
+	if x.next_node == nil
+		return 'Not Loop'
+	else
+		x = x.next_node
+	end
+	if counter.even?
+		y = y.next_node
+	else 
+		y = y
+	end
+	if x == y 
+		return 'Infinite'
+	else
+		counter += 1
+		floydscycle(node, x, y, counter)
+	end
+end
 
+
+node1 = LinkedListNode.new(37)
+node2 = LinkedListNode.new(99, node1)
+node3 = LinkedListNode.new(12, node2)
+#node1.next_node = node3
+
+
+ans = floydscycle(node3, node3, node3)
+puts ans
+
+#reverse_list2(node3)
